@@ -8,6 +8,7 @@ Sistema Inteligente de Monitoramento do Transporte Escolar
 ![database](https://img.shields.io/badge/database-SQLite-orange)
 ![security](https://img.shields.io/badge/security-AES--256-green)
 
+
 ---
 
 # Visão Geral
