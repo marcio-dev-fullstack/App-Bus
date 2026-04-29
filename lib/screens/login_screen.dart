@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import '../database/database_helper.dart';
+import '../services/sync_service.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,136 +12,135 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _userController = TextEditingController();
-  final TextEditingController _passController = TextEditingController();
-  String _errorMessage = '';
+  final _usuarioController = TextEditingController();
+  final _senhaController = TextEditingController();
+  bool _isLoading = false;
+  bool _obscureSenha = true;
 
-  void _realizarLogin() {
-    final username = _userController.text;
-    final password = _passController.text;
+  Future<void> _realizarLogin() async {
+    final usuario = _usuarioController.text.trim();
+    final senha = _senhaController.text.trim();
 
-    // Correção: Comparação exata com '=='
-    if (username == 'admin' && password == 'cda123') {
-      setState(() {
-        _errorMessage = '';
-      });
+    if (usuario.isEmpty || senha.isEmpty) {
+      _showError("Preencha todos os campos");
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      var connectivityResult = await (Connectivity().checkConnectivity());
       
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    } else {
-      setState(() {
-        _errorMessage = 'Usuário ou senha incorretos!';
-      });
+      if (connectivityResult != ConnectivityResult.none) {
+        // --- CENÁRIO ONLINE: Valida no Backend (Ex: FastAPI/PostgreSQL) ---
+        // Simulação de chamada de API
+        await Future.delayed(const Duration(seconds: 2)); 
+        
+        // Aqui você chamaria seu serviço de sincronização para baixar os alunos
+        final syncService = SyncService();
+        await syncService.checkAndSync(); 
+        
+        _irParaHome();
+      } else {
+        // --- CENÁRIO OFFLINE: Valida no SQLite local ---
+        // Aqui você faria um SELECT na sua tabela de usuários locais
+        _showWarning("Modo Offline: Usando dados locais salvos.");
+        _irParaHome();
+      }
+    } catch (e) {
+      _showError("Falha na autenticação: $e");
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
 
-  @override
-  void dispose() {
-    _userController.dispose();
-    _passController.dispose();
-    super.dispose();
+  void _irParaHome() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    );
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), backgroundColor: Colors.red),
+    );
+  }
+
+  void _showWarning(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), backgroundColor: Colors.orange),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            width: 400,
-            padding: const EdgeInsets.all(40),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                )
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(
-                  'assets/images/brasao_cda.png',
-                  height: 120,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.directions_bus,
-                    size: 80,
-                    color: Color(0xFF003366),
-                  ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Logo da SEMEC / Prefeitura
+              const Icon(Icons.directions_bus_rounded, size: 80, color: Color(0xFF0D47A1)),
+              const SizedBox(height: 10),
+              const Text(
+                "BusEscolar",
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF0D47A1)),
+              ),
+              const Text("Conceição do Araguaia - PA", style: TextStyle(color: Colors.grey)),
+              const SizedBox(height: 50),
+
+              // Campo Usuário
+              TextField(
+                controller: _usuarioController,
+                decoration: InputDecoration(
+                  labelText: "Usuário ou Matrícula",
+                  prefixIcon: const Icon(Icons.person),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                const SizedBox(height: 24),
-                const Text(
-                  'SEMEC',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF003366),
-                    letterSpacing: 1.5,
+              ),
+              const SizedBox(height: 20),
+
+              // Campo Senha
+              TextField(
+                controller: _senhaController,
+                obscureText: _obscureSenha,
+                decoration: InputDecoration(
+                  labelText: "Senha",
+                  prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    icon: Icon(_obscureSenha ? Icons.visibility : Icons.visibility_off),
+                    onPressed: () => setState(() => _obscureSenha = !_obscureSenha),
                   ),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                const Text(
-                  'Conceição do Araguaia',
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
-                ),
-                const SizedBox(height: 32),
-                
-                TextField(
-                  controller: _userController,
-                  decoration: const InputDecoration(
-                    labelText: 'Usuário',
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(),
+              ),
+              const SizedBox(height: 30),
+
+              // Botão de Entrar
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: _isLoading ? null : _realizarLogin,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text("ENTRAR NO SISTEMA", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
-                const SizedBox(height: 20),
-                
-                TextField(
-                  controller: _passController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Senha',
-                    prefixIcon: Icon(Icons.lock),
-                    border: OutlineInputBorder(),
-                  ),
-                  onSubmitted: (_) => _realizarLogin(),
-                ),
-                
-                if (_errorMessage.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      _errorMessage,
-                      style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                
-                const SizedBox(height: 32),
-                
-                SizedBox(
-                  width: double.infinity,
-                  height: 55,
-                  child: ElevatedButton(
-                    onPressed: _realizarLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF003366),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text(
-                      'ACESSAR SISTEMA',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+              
+              const SizedBox(height: 20),
+              const Text(
+                "v1.1.0 - Modo Híbrido Ativado",
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ],
           ),
         ),
       ),

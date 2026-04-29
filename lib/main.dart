@@ -1,75 +1,57 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-// Importação das suas telas
+import 'package:flutter/services.dart';
+import 'database/database_helper.dart';
+import 'services/biometric_service.dart';
 import 'screens/login_screen.dart';
-import 'screens/home_screen.dart';
 
-void main() {
-  // Inicialização obrigatória para garantir que o Flutter suba os plugins antes do app
+void main() async {
+  // Garante a inicialização das APIs nativas
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Configuração do SQLite para rodar nativamente no Windows
-  if (!kIsWeb && Platform.isWindows) {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
+  // Trava em modo retrato para estabilidade da câmera no ônibus
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
+  // Inicialização assíncrona de serviços globais
+  try {
+    final dbHelper = DatabaseHelper();
+    await dbHelper.database; // Abre/Cria o SQLite
+
+    final biometricService = BiometricService();
+    await biometricService.loadModel(); // Carrega o .tflite na RAM
+    
+    print("BusEscolar: Inicialização concluída com sucesso.");
+  } catch (e) {
+    print("Erro na inicialização do sistema: $e");
   }
 
-  runApp(const MyApp());
+  runApp(const BusEscolarApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BusEscolarApp extends StatelessWidget {
+  const BusEscolarApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Monitoramento SEMEC - CDA',
+      title: 'BusEscolar - SEMEC',
       debugShowCheckedModeBanner: false,
-      
-      // Definição da Identidade Visual Institucional
       theme: ThemeData(
-        useMaterial3: true,
-        primaryColor: const Color(0xFF003366), // Azul Marinho Oficial
-        
-        // Paleta de cores global
+        primaryColor: const Color(0xFF0D47A1),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF003366),
-          primary: const Color(0xFF003366),
-          secondary: const Color(0xFF006633), // Verde SEMEC
-          surface: Colors.white,
+          seedColor: const Color(0xFF0D47A1),
+          primary: const Color(0xFF0D47A1),
         ),
-
-        // Estilização padrão das AppBars
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF003366),
+          backgroundColor: Color(0xFF0D47A1),
           foregroundColor: Colors.white,
           centerTitle: true,
           elevation: 2,
         ),
-
-        // Estilização global de botões
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF003366),
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
+        useMaterial_design: true,
       ),
-
-      // O App agora inicia obrigatoriamente pela tela de Login
       home: const LoginScreen(),
-      
-      // Rotas nomeadas caso queira expandir a navegação depois
-      routes: {
-        '/home': (context) => const HomeScreen(),
-        '/login': (context) => const LoginScreen(),
-      },
     );
   }
 }

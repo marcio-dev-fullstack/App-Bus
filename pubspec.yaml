@@ -1,33 +1,31 @@
 name: bus_desktop
-description: "Sistema de Monitoramento SEMEC - Conceicao do Araguaia"
+description: Sistema Inteligente de Monitoramento do Transporte Escolar - SEMEC Conceição do Araguaia
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.0+1
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
 
-  # Banco de Dados local
+  # --- BANCO DE DADOS E PERSISTÊNCIA ---
   sqflite: ^2.3.0
-  sqflite_common_ffi: ^2.3.0+2
-  path: ^1.9.0
-  path_provider: ^2.1.2
+  path: ^1.8.3
+  path_provider: ^2.1.1
 
-  # GPS para monitorar o ônibus
-  geolocator: ^10.1.1
-  intl: ^0.19.0
+  # --- HARDWARE E INTELIGÊNCIA ARTIFICIAL ---
+  camera: ^0.10.5+5
+  google_mlkit_face_detection: ^0.11.0
+  tflite_flutter: ^0.10.0
 
-  # Geração de PDF e Impressão
-  pdf: ^3.10.8
-  printing: ^5.11.1
-
-  # Manipulação de Excel e Arquivos
-  excel: ^4.0.2
-  file_picker: ^8.0.0+1
+  # --- UTILIDADES, REDE E PDF ---
+  connectivity_plus: ^5.0.2
+  intl: ^0.18.1
+  #pdf: ^3.10.7
+  #printing: ^5.11.0
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -37,5 +35,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/images/brasao_cda.png
+  # --- CONFIGURAÇÃO DOS ASSETS ---
+  # IMPORTANTE: Você deve criar fisicamente as pastas assets/models e assets/images
+  # e colocar os arquivos lá, caso contrário o Flutter não compilará.
+  # assets:
+   # - assets/models/mobilefacenet.tflite
+   # - assets/images/

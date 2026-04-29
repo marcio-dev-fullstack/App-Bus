@@ -1,41 +1,50 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
-import 'package:excel/excel.dart';
+import 'package:flutter/foundation.dart';
 import '../database/database_helper.dart';
 
 class ImportService {
-  static Future<void> importarAlunos() async {
-    try {
-      // Abre a janela para escolher o arquivo Excel
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['xlsx'],
-      );
+  static Future<int> importarAlunosCSV() async {
+    final dbHelper = DatabaseHelper();
+    int contagem = 0;
 
-      if (result != null && result.files.single.path != null) {
-        var bytes = File(result.files.single.path!).readAsBytesSync();
-        var excel = Excel.decodeBytes(bytes);
-        final db = DatabaseHelper();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['csv'],
+      withData: true, 
+    );
 
-        for (var table in excel.tables.keys) {
-          var rows = excel.tables[table]!.rows;
-          // Pula o cabeçalho (Linha 1)
-          for (var i = 1; i < rows.length; i++) {
-            var row = rows[i];
-            // Verifica se a primeira célula (Nome) não está vazia
-            if (row.isNotEmpty && row[0] != null) {
-              await db.insertAluno({
-                'nome': row[0]?.value.toString() ?? 'Sem Nome',
-                'matricula': row.length > 1 ? row[1]?.value.toString() ?? 'S/M' : 'S/M',
-                'presenca': 0
-              });
-            }
-          }
-        }
-        print("Importação concluída com sucesso!");
+    if (result != null && result.files.first.bytes != null) {
+      Uint8List fileBytes = result.files.first.bytes!;
+      String csvString;
+      try {
+        csvString = utf8.decode(fileBytes);
+      } catch (_) {
+        csvString = latin1.decode(fileBytes);
       }
-    } catch (e) {
-      print("Erro ao importar Excel: $e");
+      
+      List<String> linhas = csvString.split(RegExp(r'\r\n|\n|\r'));
+      
+      for (var linha in linhas) {
+        if (linha.trim().isEmpty) continue;
+        List<String> colunas = linha.contains(';') ? linha.split(';') : linha.split(',');
+
+        if (colunas.length >= 2) {
+          String matricula = colunas[0].replaceAll(RegExp(r'[^\d]'), '').trim();
+          String nome = colunas[1].replaceAll('"', '').trim().toUpperCase();
+
+          if (nome == 'NOME' || nome.contains('ALUNO') || nome.isEmpty) continue;
+
+          await dbHelper.insertAluno({
+            'nome': nome,
+            'matricula': matricula,
+            'presenca': 0,
+          });
+          contagem++;
+        }
+      }
     }
+    return contagem;
   }
 }

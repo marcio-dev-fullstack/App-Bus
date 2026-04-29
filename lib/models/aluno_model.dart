@@ -1,48 +1,58 @@
-class Aluno {
-  final int? id;
+import 'dart:convert';
+
+class AlunoModel {
+  final int id;
   final String nome;
   final String matricula;
-  final bool presente;
-  final String? dataHoraPresenca;
+  final int rotaId;
+  final String? escola;
+  final String? turma;
+  final String? faceTemplate; // Vetor numérico guardado como JSON String
+  final int statusAtivo;
 
-  Aluno({
-    this.id,
+  AlunoModel({
+    required this.id,
     required this.nome,
     required this.matricula,
-    this.presente = false,
-    this.dataHoraPresenca,
+    required this.rotaId,
+    this.escola,
+    this.turma,
+    this.faceTemplate,
+    this.statusAtivo = 1,
   });
 
-  // Converte um Aluno num Map para inserir no SQLite
+  // Converte um Map do SQLite para o Objeto AlunoModel
+  factory AlunoModel.fromMap(Map<String, dynamic> json) {
+    return AlunoModel(
+      id: json['id'],
+      nome: json['nome'],
+      matricula: json['matricula'],
+      rotaId: json['rota_id'],
+      escola: json['escola'],
+      turma: json['turma'],
+      faceTemplate: json['face_template'],
+      statusAtivo: json['status_ativo'] ?? 1,
+    );
+  }
+
+  // Converte o Objeto AlunoModel para Map para salvar no SQLite
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'nome': nome,
       'matricula': matricula,
-      'presenca': presente ? 1 : 0,
-      'data_hora_presenca': dataHoraPresenca,
+      'rota_id': rotaId,
+      'escola': escola,
+      'turma': turma,
+      'face_template': faceTemplate,
+      'status_ativo': statusAtivo,
     };
   }
 
-  // Cria um objeto Aluno a partir de um Map vindo do SQLite
-  factory Aluno.fromMap(Map<String, dynamic> map) {
-    return Aluno(
-      id: map['id'] as int?,
-      nome: map['nome'] as String? ?? 'Sem Nome',
-      matricula: map['matricula'] as String? ?? 'S/M',
-      presente: (map['presenca'] as int?) == 1,
-      dataHoraPresenca: map['data_hora_presenca'] as String?,
-    );
-  }
-
-  // Método auxiliar para formatar a data/hora de forma legível no PDF ou na tela
-  String get dataHoraFormatada {
-    if (dataHoraPresenca == null) return "---";
-    try {
-      DateTime dt = DateTime.parse(dataHoraPresenca!);
-      return "${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')} ${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}";
-    } catch (e) {
-      return "Erro na data";
-    }
+  // Helper para facilitar o uso do template biométrico no código
+  List<double>? get getFaceVector {
+    if (faceTemplate == null) return null;
+    List<dynamic> decoded = jsonDecode(faceTemplate!);
+    return decoded.map((e) => e as double).toList();
   }
 }
