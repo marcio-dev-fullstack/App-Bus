@@ -6,7 +6,7 @@
 ![Arquitetura](https://img.shields.io/badge/Padrão-Clean_Arch-💡?style=for-the-badge)
 ![Integração](https://img.shields.io/badge/E--SEMEC-Homologado-brightgreen?style=for-the-badge)
 
-# 🖥️ Bus-Desktop — Central de Gestão & Auditoria Escolar
+# 🖥️ App-Bus — Central de Gestão & Auditoria Escolar
 
 **Painel Administrativo de Retaguarda desenvolvido para a Secretaria Municipal de Educação (SEMEC). O sistema atua como a central de comando para monitoramento de frotas, consolidação de frequências e auditoria de logs de embarque.**
 
@@ -16,7 +16,7 @@
 
 ## 📊 Escopo do Sistema Administrativo
 
-Enquanto o **App-Bus** atua na ponta coletando os registros biométricos dos alunos nas rotas rurais, o **Bus-Desktop** consolida esses dados na sede da Secretaria, oferecendo uma interface analítica para a gestão educacional:
+Enquanto o **App-Bus** atua na ponta coletando os registros biométricos dos alunos nas rotas rurais, o **E-SEMEC** consolida esses dados na sede da Secretaria, oferecendo uma interface analítica para a gestão educacional:
 
 * 👥 **Gestão de Alunos:** Sincronização e cruzamento do cadastro de matrículas com o banco de dados do E-SEMEC.
 * 📈 **Painel de Auditoria:** Gráficos de assiduidade, alertas de inconsistências e monitoramento de sincronizações offline rebatidas pelos motoristas.
