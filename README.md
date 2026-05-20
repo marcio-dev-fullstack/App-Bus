@@ -1,117 +1,108 @@
 
-# BusEscolar
-Sistema Inteligente de Monitoramento do Transporte Escolar
+<div align="center">
 
-![version](https://img.shields.io/badge/version-v1.1-blue)
-![status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![platform](https://img.shields.io/badge/platform-React%20Native-blue)
-![database](https://img.shields.io/badge/database-SQLite-orange)
-![security](https://img.shields.io/badge/security-AES--256-green)
+![Plataforma](https://img.shields.io/badge/Plataforma-Windows_Desktop-0078D4?style=for-the-badge&logo=windows&logoColor=white)
+![Framework](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Arquitetura](https://img.shields.io/badge/Padrão-Clean_Arch-💡?style=for-the-badge)
+![Integração](https://img.shields.io/badge/E--SEMEC-Homologado-brightgreen?style=for-the-badge)
 
+# 🖥️ Bus-Desktop — Central de Gestão & Auditoria Escolar
 
----
+**Painel Administrativo de Retaguarda desenvolvido para a Secretaria Municipal de Educação (SEMEC). O sistema atua como a central de comando para monitoramento de frotas, consolidação de frequências e auditoria de logs de embarque.**
 
-# Visão Geral
-
-O **BusEscolar** é um sistema de monitoramento e auditoria do transporte escolar desenvolvido para a **Prefeitura de Conceição do Araguaia (SEMEC)**.
-
-O sistema opera em **modo Offline First**, permitindo funcionamento em regiões rurais com baixa conectividade.
-
-## Principais recursos:
-
-**Offline First**: Operação total em zonas rurais sem sinal de internet.
-
-**Reconhecimento Facial**: Validação de embarque via biometria facial processada localmente (Edge Computing).
-
-**Rastreamento GPS**: Monitoramento contínuo do trajeto para conformidade com FNDE/INEP.
-
-**Sincronização Inteligente**: Fila de upload automático ao detectar Wi-Fi ou sinal estável.
-
-**Segurança (LGPD)**: Banco de dados SQLite criptografado para proteção de dados de menores.
+</div>
 
 ---
 
-# Documentação Técnica
+## 📊 Escopo do Sistema Administrativo
 
-Arquivos de documentação:
+Enquanto o **App-Bus** atua na ponta coletando os registros biométricos dos alunos nas rotas rurais, o **Bus-Desktop** consolida esses dados na sede da Secretaria, oferecendo uma interface analítica para a gestão educacional:
 
-- Arquitetura → docs/arquitetura.md
-- Banco de Dados → docs/banco.md
-- Fluxo de Embarque → docs/fluxo-embarque.md
-- Telas do Sistema → docs/telas.md
-- Demonstração → docs/demo.md
-
----
-
-# Tecnologias Utilizadas
-
-**Frontend**: Flutter (Dart).
-
-**Banco de Dados**: SQLite com SQLCipher (AES-256).
-
-**Motor Biométrico**: Google ML Kit / TensorFlow Lite.
-
-**Backend**: Integração via API com o sistema E-SEMEC (PostgreSQL).
-
-**Segurança**: Autenticação JWT e Criptografia AES-256.
+* 👥 **Gestão de Alunos:** Sincronização e cruzamento do cadastro de matrículas com o banco de dados do E-SEMEC.
+* 📈 **Painel de Auditoria:** Gráficos de assiduidade, alertas de inconsistências e monitoramento de sincronizações offline rebatidas pelos motoristas.
+* 📑 **Módulo de Exportação:** Geração de relatórios gerenciais e planilhas unificadas para prestação de contas do PNATE.
+* 🗺️ **Rastreamento de Rotas:** Visualização e mapeamento dos perímetros de geofencing das escolas polo.
 
 ---
 
-# Instalação
+## 🏗️ Estrutura Arquitetural do Módulo Desktop
 
-Clone o projeto:
-git clone https://github.com/cdamarcio/Bus.git
+O projeto segue as diretrizes de desenvolvimento do ecossistema Flutter Desktop, separando as responsabilidades de controle administrativo de forma limpa:
 
-Entre na pasta:
+```text
+lib/
+│
+├── core/                  # Configurações globais e inicialização de janelas
+│   ├── theme/             # Identidade visual corporativa da SEMEC
+│   └── network/           # Cliente HTTP para consumo do barramento E-SEMEC
+│
+├── data/                  # Repositórios e comunicação com serviços externos
+│   ├── models/            # Modelos de dados (Aluno, Rota, LogAuditoria)
+│   └── datasources/       # Requisições diretas de API
+│
+├── providers/             # Gerenciamento de estado global e cache gerencial
+│
+└── screens/               # Telas adaptadas para ambiente Desktop (1280x800+)
+    ├── dashboard_screen.dart   # Visão analítica geral das rotas rurais
+    ├── auditoria_screen.dart   # Tabela de conferência de logs e biometria
+    └── alunos_screen.dart      # Controle e espelhamento de matrículas
 
-cd Bus
-
-Instale dependências:
-
-npm install
-
-Execute:
-
-npx expo start
-
----
-
-## Como Operar o Sistema
-
-1. **Início da Rota**: O monitor seleciona a rota designada no tablet.
-   
-3. **Embarque**: O aluno posiciona-se à frente da câmera. O sistema realiza o reconhecimento em < 3 segundos.
-
-4. **Fallback**: Caso a biometria falhe, o monitor pode realizar o registro manual.
-
-5. **Encerramento**: Ao chegar na escola, o sistema reconhece o perímetro (Geofencing) e inicia a sincronização dos logs.
+```
 
 ---
 
-## Autor
+## ⚡ Requisitos e Configuração do Ambiente
 
-**Márcio Rodrigues de Oliveira | Desenvolvedor Líder Fullstack | cda.marcio@gmail.com**
+Por se tratar de uma aplicação nativa para Windows, certifique-se de ter os componentes de compilação desktop instalados na sua máquina de desenvolvimento:
+
+### 1. Pré-requisitos do Sistema
+
+* Flutter SDK (Versão estável)
+* Ferramentas de compilação C++ do **Visual Studio** (Development with C++)
+
+### 2. Inicialização do Projeto
+
+Abra o terminal na pasta raiz do projeto `Bus-Desktop` e execute o comando para baixar os pacotes de integração:
+
+```bash
+# Sincroniza as dependências do projeto
+flutter pub get
+
+```
+
+### 3. Execução em Modo de Desenvolvimento
+
+Como o seu script local já automatiza o bind de portas na rede, para rodar o ambiente Desktop nativo no Windows, utilize o comando:
+
+```bash
+flutter run -d windows
+
+```
 
 ---
 
-### MIT License
+## ☁️ Comunicação Side-by-Side (Ecossistema)
 
-### Copyright (c) 2026 MARCIO RODRIGUES DE OLIVEIRA
+O ecossistema opera de forma integrada com os demais microsserviços através da API central:
 
-É concedida permissão, gratuitamente, a qualquer pessoa que obtenha uma cópia
-deste software e arquivos de documentação associados (o "Software"), para lidar
-com o Software sem restrições, incluindo, sem limitação, os direitos
-de usar, copiar, modificar, fundir, publicar, distribuir, sublicenciar e/ou vender
-cópias do Software, e para permitir que as pessoas a quem o Software é
-fornecido o façam, sujeitas às seguintes condições:
+```text
+  ┌─────────────────┐           ┌──────────────────┐
+  │     App-Bus     │           │   Bus-Desktop    │
+  │ (Campos/Rotas)  │           │ (Secretaria/Adm) │
+  └────────┬────────┘           └────────┬─────────┘
+           │                             │
+           ▼                             ▼
+  ┌────────────────────────────────────────────────┘
+  │        API Gateway — Backend (FastAPI)
+  │        ➔ Banco de Dados Central E-SEMEC
+  └────────────────────────────────────────────────┘
 
-O aviso de direitos autorais acima e este aviso de permissão devem ser incluídos em todas as
-cópias ou partes substanciais do Software.
+```
 
-O SOFTWARE É FORNECIDO "NO ESTADO EM QUE SE ENCONTRA", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU
-IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO,
-ADEQUAÇÃO A UM FIM ESPECÍFICO E NÃO VIOLAÇÃO. EM NENHUMA HIPÓTESE OS
-AUTORES OU DETENTORES DOS DIREITOS AUTORAIS SERÃO RESPONSÁVEIS POR QUAISQUER REIVINDICAÇÕES, DANOS OU OUTRAS
-RESPONSABILIDADES, SEJA EM AÇÃO CONTRATUAL, EXTRACONTRATUAL OU DE OUTRA NATUREZA, DECORRENTES DE,
-OU RELACIONADAS COM O SOFTWARE OU O USO OU OUTRAS NEGOCIAÇÕES COM O
-SOFTWARE.
+---
+
+## 👥 Desenvolvimento
+
+**Especificado, Desenvolvido e Gerenciado no ecossistema de TI da SEMEC.** *Controle de Engenharia de Software e Segurança de Dados aplicados ao Transporte Municipal.*
+
+```
