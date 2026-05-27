@@ -103,6 +103,7 @@ O ecossistema opera de forma integrada com os demais microsserviços através da
 
 ## 👥 Desenvolvimento
 
-**Especificado, Desenvolvido e Gerenciado no ecossistema de TI da SEMEC.** *Controle de Engenharia de Software e Segurança de Dados aplicados ao Transporte Municipal.*
+**Especificado, Desenvolvido e Gerenciado no ecossistema de TI da SEMEC.** *
+**Servidor: MÁRCIO RODRIGUES DE OLIVEIRA - DEV FULLSTACK.** *
 
 ```
