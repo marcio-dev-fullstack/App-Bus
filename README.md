@@ -103,8 +103,10 @@ O ecossistema opera de forma integrada com os demais microsserviços através da
 
 ## 👥 Desenvolvimento
 
-**Especificado, Desenvolvido e Gerenciado no ecossistema de TI da SEMEC.**
 
 **Servidor: MÁRCIO RODRIGUES DE OLIVEIRA - DEV FULLSTACK.**
+
+Especificado, Desenvolvido e Gerenciado no ecossistema de TI da SEMEC.
+
 
 ```
