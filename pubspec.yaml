@@ -1,7 +1,6 @@
-name: bus_desktop
-description: Sistema Inteligente de Monitoramento do Transporte Escolar - SEMEC Conceição do Araguaia
-publish_to: 'none'
-version: 1.1.0+1
+name: app_bus
+description: Central de Gestão, Monitoramento e Auditoria do Transporte Escolar - SEMEC.
+version: 1.0.0
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -9,35 +8,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
-  # --- BANCO DE DADOS E PERSISTÊNCIA ---
-  sqflite: ^2.3.0
-  path: ^1.8.3
-  path_provider: ^2.1.1
+  # Interface e Componentes Visuais (Híbrido)
+  fluent_ui: ^4.15.1
+  sidebarx: ^0.15.0
+  fl_chart: ^0.66.2
+  provider: ^6.1.5+1
 
-  # --- HARDWARE E INTELIGÊNCIA ARTIFICIAL ---
-  camera: ^0.10.5+5
-  google_mlkit_face_detection: ^0.11.0
-  tflite_flutter: ^0.10.0
-
-  # --- UTILIDADES, REDE E PDF ---
+  # Motores do Aplicativo Mobile (Ponta)
+  geolocator: ^10.1.0
+  uuid: ^4.3.3
+  sqflite_sqlcipher: ^3.2.1
   connectivity_plus: ^5.0.2
-  intl: ^0.18.1
-  #pdf: ^3.10.7
-  #printing: ^5.11.0
-  http: ^1.1.0
+
+  # Comunicação e Utilitários de Rede
+  http: ^1.6.0
+
+  # Utilitários de Controle de Janela Nativa (Windows)
+  window_manager: ^0.3.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^3.0.2
+
+dependency_overrides:
+  intl: ^0.20.2
 
 flutter:
   uses-material-design: true
-
-  # --- CONFIGURAÇÃO DOS ASSETS ---
-  # IMPORTANTE: Você deve criar fisicamente as pastas assets/models e assets/images
-  # e colocar os arquivos lá, caso contrário o Flutter não compilará.
-  # assets:
-   # - assets/models/mobilefacenet.tflite
-   # - assets/images/

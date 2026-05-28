@@ -1,6 +1,6 @@
 {
-    "name": "bus_desktop",
-    "short_name": "bus_desktop",
+    "name": "bus_escolar",
+    "short_name": "bus_escolar",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
