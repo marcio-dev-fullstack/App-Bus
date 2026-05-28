@@ -1,12 +1,4 @@
-# bus_escolar
 
-<<<<<<< HEAD
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-=======
 <div align="center">
 
 ![Plataforma](https://img.shields.io/badge/Plataforma-Windows_Desktop-0078D4?style=for-the-badge&logo=windows&logoColor=white)
@@ -19,19 +11,9 @@ This project is a starting point for a Flutter application.
 **Painel Administrativo de Retaguarda desenvolvido para a Secretaria Municipal de Educação (SEMEC). O sistema atua como a central de comando para monitoramento de frotas, consolidação de frequências e auditoria de logs de embarque.**
 
 </div>
->>>>>>> 133c7809c2b2b8f3ccd384d68fd9fe546075f837
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-<<<<<<< HEAD
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
 ## 📊 Escopo do Sistema Administrativo
 
 Enquanto o **App-Bus** atua na ponta coletando os registros biométricos dos alunos nas rotas rurais, o **E-SEMEC** consolida esses dados na sede da Secretaria, oferecendo uma interface analítica para a gestão educacional:
@@ -128,4 +110,3 @@ Especificado, Desenvolvido e Gerenciado no ecossistema de TI da SEMEC.
 
 
 ```
->>>>>>> 133c7809c2b2b8f3ccd384d68fd9fe546075f837
