@@ -18,16 +18,18 @@ dependencies:
   provider: ^6.1.5+1
 
   # Motores do Aplicativo Mobile (Ponta)
-  geolocator: ^10.1.0
+  geolocator: ^14.0.2
   uuid: ^4.3.3
   sqflite_sqlcipher: ^3.2.1
-  connectivity_plus: ^5.0.2
+  connectivity_plus: ^7.1.1
 
   # Comunicação e Utilitários de Rede
   http: ^1.6.0
 
   # Utilitários de Controle de Janela Nativa (Windows)
   window_manager: ^0.3.9
+  sqflite: ^2.4.2+1
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

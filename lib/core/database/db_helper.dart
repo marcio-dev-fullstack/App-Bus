@@ -1,69 +1,44 @@
-import 'package:flutter/foundation.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DbHelper {
-  static final DbHelper instance = DbHelper._init();
+  static const _databaseName = "app_bus_local.db";
+  static const _databaseVersion = 1;
+
+  static const tableLogs = 'logs_embarque_offline';
+
+  // Singleton para garantir uma única instância do banco aberta
+  DbHelper._privateConstructor();
+  static final DbHelper instance = DbHelper._privateConstructor();
+
   static Database? _database;
-
-  DbHelper._init();
-
-  // Chave de criptografia AES-256 (Em produção, deve vir de um ambiente seguro/KeyStore)
-  final String _dbSecretKey = "DiretoriaTI_SEMEC_2026_SecureKey#";
-
   Future<Database> get database async {
     if (_database != null) return _database!;
-    
-    if (kIsWeb) {
-      throw UnsupportedError("SQLite com SQLCipher não roda diretamente no navegador Web.");
-    }
-
-    _database = await _initDB('bus_escolar_secure.db');
+    _database = await _initDatabase();
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
-
-    // openDatabase do sqflite_sqlcipher exige o parâmetro password para encriptar o disco
+  _initDatabase() async {
+    String path = join(await getDatabasesPath(), _databaseName);
     return await openDatabase(
-      path, 
-      version: 1, 
-      password: _dbSecretKey,
-      onCreate: _createDB,
+      path,
+      version: _databaseVersion,
+      onCreate: _onCreate,
     );
   }
 
-  Future _createDB(Database db, int version) async {
-    // Tabela de Alunos (Cache Local)
+  // Cria a tabela espelho da nossa retaguarda
+  Future _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE alunos (
-        id TEXT PRIMARY KEY,
-        nome TEXT NOT NULL,
-        matricula TEXT NOT NULL,
-        embedding_facial TEXT
-      )
-    ''');
-
-    // Tabela de Logs de Embarque (Fila Offline)
-    await db.execute('''
-      CREATE TABLE logs_embarque (
-        id TEXT PRIMARY KEY,
-        aluno_id TEXT NOT NULL,
-        timestamp TEXT NOT NULL,
-        latitude REAL NOT NULL,
-        longitude REAL NOT NULL,
-        metodo_validacao TEXT NOT NULL,
-        sincronizado INTEGER NOT NULL DEFAULT 0
-      )
-    ''');
-  }
-
-  Future<void> limparBanco() async {
-    if (kIsWeb) return;
-    final db = await database;
-    await db.delete('alunos');
-    await db.delete('logs_embarque');
+          CREATE TABLE $tableLogs (
+            id TEXT PRIMARY KEY,
+            aluno_id TEXT NOT NULL,
+            veiculo_id TEXT NOT NULL,
+            rota_id TEXT NOT NULL,
+            timestamp_dispositivo TEXT NOT NULL,
+            latitude REAL NOT NULL,
+            longitude REAL NOT NULL
+          )
+          ''');
   }
 }
