@@ -1,441 +1,385 @@
-# 🚍 Sistema de Monitoramento da Frota Escolar
+# 🚍 Sistema de Monitoramento Inteligente da Frota Escolar
 
-![Version](https://img.shields.io/badge/version-1.1-blue.svg)
-![Status](https://img.shields.io/badge/status-Em%20Desenvolvimento-orange.svg)
-![Platform](https://img.shields.io/badge/platform-Android-green.svg)
-![License](https://img.shields.io/badge/license-Proprietário-red.svg)
+<div align="center">
 
-## 📋 Sobre o Projeto
+![SEMEC](https://img.shields.io/badge/SEMEC-Conceição%20do%20Araguaia-green)
 
-O **Sistema de Monitoramento da Frota Escolar** é uma solução tecnológica desenvolvida para a **Secretaria Municipal de Educação (SEMEC) de Conceição do Araguaia - PA**, com o objetivo de modernizar e automatizar o controle do transporte escolar municipal.
+![Version](https://img.shields.io/badge/Version-1.1-blue)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange)
+![Platform](https://img.shields.io/badge/Platform-Android-success)
+![Architecture](https://img.shields.io/badge/Architecture-Offline%20First-purple)
+![LGPD](https://img.shields.io/badge/LGPD-Compliant-brightgreen)
+![Flutter](https://img.shields.io/badge/Flutter-3.x-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
 
-A aplicação foi concebida seguindo a filosofia **Offline First**, permitindo operação contínua mesmo em regiões sem cobertura de internet, cenário comum nas rotas rurais do município.
+### Transformando o Transporte Escolar através da Inteligência Artificial, Geolocalização e Computação Offline
 
-O sistema realiza:
-
-* Reconhecimento facial de alunos embarcados;
-* Registro automatizado de frequência;
-* Rastreamento GPS das rotas;
-* Auditoria completa das viagens;
-* Integração com o sistema E-SEMEC;
-* Geração de relatórios gerenciais.
+</div>
 
 ---
 
-# 🎯 Objetivos
+# 📖 Visão Geral
 
-## Objetivos Principais
+O **Sistema de Monitoramento Inteligente da Frota Escolar** foi projetado para modernizar a gestão do transporte escolar municipal da Prefeitura de Conceição do Araguaia, automatizando o controle de frequência dos alunos através de reconhecimento facial offline, monitoramento geográfico das rotas e sincronização segura dos dados com a Secretaria Municipal de Educação.
 
-### ✔ Automatização da Chamada Escolar
+O projeto atende às necessidades operacionais das áreas urbanas e rurais do município, garantindo funcionamento contínuo mesmo em locais sem cobertura de internet.
 
-Eliminar processos manuais através da identificação biométrica facial.
+---
 
-### ✔ Auditoria de Rotas
+# 🎯 Objetivos Estratégicos
 
-Registrar geolocalização do trajeto para fins de fiscalização e conformidade com:
+## Educação Digital
+
+Eliminar processos manuais de chamada escolar.
+
+## Transparência Pública
+
+Permitir auditoria completa das rotas executadas.
+
+## Controle Operacional
+
+Monitorar embarques e desembarques em tempo real.
+
+## Conformidade Institucional
+
+Atender exigências de:
 
 * FNDE
 * INEP
 * Tribunal de Contas
 * Ministério Público
+* Lei Geral de Proteção de Dados (LGPD)
 
-### ✔ Digitalização dos Processos
+---
 
-Eliminar planilhas e registros em papel utilizados atualmente.
+# 🚀 Principais Funcionalidades
+
+## 👦 Reconhecimento Facial Offline
+
+* Identificação biométrica sem internet
+* Processamento local (Edge AI)
+* Resposta inferior a 3 segundos
+* Confirmação visual do monitor
+
+---
+
+## 📍 Rastreamento Inteligente
+
+* Captura automática de GPS
+* Histórico completo da rota
+* Trilha auditável
+* Registro georreferenciado dos embarques
+
+---
+
+## 📶 Operação Offline First
+
+O sistema foi projetado para operar em ambientes rurais sem cobertura de rede.
+
+### Funciona Offline
+
+✅ Reconhecimento facial
+
+✅ Registro de embarques
+
+✅ Geolocalização
+
+✅ Relatórios locais
+
+✅ Armazenamento seguro
+
+---
+
+## 🔄 Sincronização Automática
+
+Quando o veículo:
+
+* Entrar na área da escola
+* Conectar ao Wi-Fi autorizado
+* Detectar conexão disponível
+
+O aplicativo sincroniza automaticamente os dados.
 
 ---
 
 # 🏗 Arquitetura da Solução
 
-```text
-┌──────────────────────────────┐
-│      Sistema E-SEMEC         │
-│      PostgreSQL/API          │
-└──────────────┬───────────────┘
-               │
-        Internet/Wi-Fi
-               │
-┌──────────────▼───────────────┐
-│    Aplicativo Mobile         │
-│         Flutter              │
-└──────────────┬───────────────┘
-               │
-      SQLite Criptografado
-               │
-┌──────────────▼───────────────┐
-│ Reconhecimento Facial Offline│
-│      ML Kit / FaceNet        │
-└──────────────────────────────┘
+```mermaid
+flowchart TD
+
+A[API E-SEMEC]
+B[PostgreSQL]
+C[Aplicativo Flutter]
+D[SQLite Criptografado]
+E[Reconhecimento Facial]
+F[GPS]
+G[Relatórios]
+
+A --> C
+B --> A
+
+C --> D
+C --> E
+C --> F
+C --> G
 ```
 
 ---
 
-# ⚙ Funcionalidades
+# 📱 Arquitetura Mobile
 
-## RF-001 - Sincronização de Dados
+```mermaid
+graph LR
 
-Realiza download automático de:
+UI[Interface Flutter]
 
-* Alunos
-* Matrículas
-* Fotos biométricas
-* Rotas
-* Escolas
-* Pontos de parada
+BL[Business Layer]
 
-### Fluxo
+DB[SQLite]
 
-```text
-SEMEC API
-     ↓
-Download
-     ↓
-SQLite Local
-     ↓
-Operação Offline
+API[REST API]
+
+GPS[GPS Service]
+
+FACE[Face Recognition]
+
+UI --> BL
+
+BL --> DB
+BL --> API
+BL --> GPS
+BL --> FACE
 ```
 
 ---
 
-## RF-002 - Reconhecimento Facial Offline
+# 🛠 Stack Tecnológica
 
-### Características
+## Frontend
 
-* Processamento local (Edge Computing)
-* Não depende de internet
-* Identificação instantânea
-* Utilização de IA embarcada
+| Tecnologia          | Finalidade              |
+| ------------------- | ----------------------- |
+| Flutter             | Aplicativo Mobile       |
+| Dart                | Linguagem Principal     |
+| Provider / Riverpod | Gerenciamento de Estado |
 
-### Tecnologias sugeridas
+---
 
-* Google ML Kit
-* TensorFlow Lite
-* FaceNet
+## Backend
 
-### Meta de desempenho
+| Tecnologia   | Finalidade   |
+| ------------ | ------------ |
+| ASP.NET Core | API REST     |
+| JWT          | Autenticação |
+| Swagger      | Documentação |
 
-```text
-Tempo de reconhecimento:
-< 3 segundos
+---
+
+## Banco de Dados
+
+| Tecnologia | Finalidade    |
+| ---------- | ------------- |
+| PostgreSQL | Banco Central |
+| SQLite     | Banco Local   |
+| SQLCipher  | Criptografia  |
+
+---
+
+## Inteligência Artificial
+
+| Tecnologia      | Uso                   |
+| --------------- | --------------------- |
+| Google ML Kit   | Reconhecimento Facial |
+| TensorFlow Lite | IA Offline            |
+| FaceNet         | Vetorização Facial    |
+
+---
+
+# 🔐 Segurança
+
+## Proteção de Dados
+
+O sistema manipula informações sensíveis de menores de idade.
+
+### Implementações
+
+* Criptografia AES-256
+* Banco SQLCipher
+* Login JWT
+* Comunicação HTTPS
+* Tokens de acesso temporários
+
+---
+
+# 📊 Fluxo Operacional
+
+```mermaid
+sequenceDiagram
+
+participant M as Monitor
+participant APP as Aplicativo
+participant DB as SQLite
+participant API as E-SEMEC
+
+M->>APP: Login
+
+APP->>API: Sincronizar dados
+
+API-->>APP: Alunos e rotas
+
+APP->>DB: Armazenar localmente
+
+M->>APP: Reconhecimento facial
+
+APP->>DB: Registrar embarque
+
+APP->>APP: Capturar GPS
+
+APP->>API: Sincronização final
+
+API-->>APP: Confirmação
 ```
 
 ---
 
-## RF-003 - Embarque Manual (Fallback)
+# 📂 Estrutura do Projeto
 
-Caso ocorra:
-
-* Falha biométrica
-* Baixa iluminação
-* Rosto coberto
-* Lesão facial
-
-O monitor poderá:
-
-* Pesquisar aluno
-* Selecionar manualmente
-* Confirmar embarque
-
----
-
-## RF-004 - Rastreamento de Rota
-
-Registro contínuo de:
-
-* Latitude
-* Longitude
-* Data
-* Hora
-* Velocidade (opcional)
-
-Cada embarque fica vinculado ao local exato onde ocorreu.
-
----
-
-## RF-005 - Geofencing Inteligente
-
-O sistema detecta automaticamente:
-
-### Entrada na escola
-
-ou
-
-### Conexão Wi-Fi autorizada
-
-Disparando:
-
-```text
-Sincronização automática
-dos dados coletados.
+```bash
+SEMMA-Fiscaliza/
+│
+├── mobile/
+│   ├── lib/
+│   ├── assets/
+│   ├── services/
+│   ├── repositories/
+│   ├── models/
+│   └── screens/
+│
+├── backend/
+│   ├── Controllers/
+│   ├── Services/
+│   ├── Repositories/
+│   ├── Models/
+│   └── Database/
+│
+├── docs/
+│
+├── api/
+│
+└── README.md
 ```
 
 ---
 
-## RF-006 - Relatórios
+# 📡 Endpoints
 
-### Disponíveis
-
-* Alunos embarcados
-* Alunos ausentes
-* Quilometragem percorrida
-* Tempo de viagem
-* Histórico de rotas
-
-Exportação:
-
-* PDF
-* Tela
-* API
-
----
-
-# 🔒 Segurança
-
-## LGPD
-
-O sistema manipula dados de menores de idade.
-
-Por isso:
-
-### Banco Criptografado
-
-```text
-AES-256
-SQLCipher
-```
-
-### Autenticação
-
-```text
-JWT
-OAuth 2.0 (Futuro)
-```
-
-### Dados Protegidos
-
-* Nome
-* Matrícula
-* Fotografias
-* Vetores biométricos
-* Localização
-
----
-
-# 📱 Requisitos de Hardware
-
-## Dispositivos
-
-* Tablets Android
-* Smartphones Android
-
-### Requisitos mínimos
-
-| Item          | Especificação       |
-| ------------- | ------------------- |
-| Android       | 10+                 |
-| RAM           | 3 GB                |
-| Armazenamento | 32 GB               |
-| GPS           | Obrigatório         |
-| Câmera        | Frontal ou Traseira |
-
----
-
-# 🎨 UX/UI
-
-Identidade visual baseada nas cores oficiais de Conceição do Araguaia.
-
-### Paleta
-
-```css
-Verde
-Amarelo
-Azul
-Branco
-```
-
-### Diretrizes
-
-* Botões grandes
-* Alto contraste
-* Operação com uma mão
-* Uso em movimento
-
----
-
-# 🗄 Estrutura de Banco de Dados
-
-## Tabela: alunos
-
-```sql
-CREATE TABLE alunos (
-    id UUID PRIMARY KEY,
-    matricula VARCHAR(30),
-    nome VARCHAR(255),
-    hash_facial TEXT,
-    escola_id UUID
-);
-```
-
-## Tabela: embarques
-
-```sql
-CREATE TABLE embarques (
-    id UUID PRIMARY KEY,
-    aluno_id UUID,
-    data_hora TIMESTAMP,
-    latitude DOUBLE,
-    longitude DOUBLE,
-    sincronizado BOOLEAN
-);
-```
-
-## Tabela: rotas
-
-```sql
-CREATE TABLE rotas (
-    id UUID PRIMARY KEY,
-    veiculo_id UUID,
-    descricao VARCHAR(255)
-);
-```
-
----
-
-# 🔄 APIs
-
-## Download de Dados
+## Obter Alunos da Rota
 
 ```http
-GET /api/rotas/{id_veiculo}/alunos
-```
-
-### Resposta
-
-```json
-{
-  "id": 1,
-  "nome": "Aluno Exemplo",
-  "matricula": "20260001"
-}
+GET /api/rotas/{idVeiculo}/alunos
 ```
 
 ---
 
-## Upload de Viagens
+## Sincronizar Viagem
 
 ```http
 POST /api/viagens/sincronizar
 ```
 
-### Payload
+---
 
-```json
-{
-  "embarques": [],
-  "coordenadas": []
-}
+## Login
+
+```http
+POST /api/auth/login
 ```
 
 ---
 
-# 🚀 Tecnologias Recomendadas
+# 🧪 Roadmap
 
-## Frontend
+## Versão 1.0
 
-* Flutter
-* Dart
-
-## Backend
-
-* ASP.NET Core
-* Node.js
-* Laravel
-
-## Banco
-
-* PostgreSQL
-* SQLite
-
-## IA
-
-* TensorFlow Lite
-* Google ML Kit
-
-## Mapas
-
-* OpenStreetMap
-* Google Maps
+* [x] Especificação de Requisitos
+* [x] Arquitetura Inicial
+* [ ] Protótipo Mobile
+* [ ] API REST
 
 ---
 
-# 🔄 Fluxo Operacional
+## Versão 2.0
 
-```text
-1. Login do Monitor
-          ↓
-2. Download de Dados
-          ↓
-3. Início da Rota
-          ↓
-4. Reconhecimento Facial
-          ↓
-5. Registro GPS
-          ↓
-6. Chegada na Escola
-          ↓
-7. Sincronização
-          ↓
-8. Relatórios
-```
+* [ ] Dashboard Web
+* [ ] Painel Administrativo
+* [ ] BI Educacional
+* [ ] Relatórios Avançados
 
 ---
 
-# 📈 Melhorias Futuras
+## Versão 3.0
 
-## Planejadas
-
-* Dashboard Web
-* Aplicativo para Pais
-* Notificações em Tempo Real
-* QR Code de Emergência
-* Reconhecimento de Placa do Veículo
-* Inteligência Artificial para Auditoria
+* [ ] Aplicativo dos Pais
+* [ ] Notificações em Tempo Real
+* [ ] Monitoramento ao Vivo
+* [ ] IA para Auditoria de Rotas
 
 ---
 
-# 👨‍💻 Equipe do Projeto
+# 📈 Benefícios Esperados
+
+| Indicador                | Impacto |
+| ------------------------ | ------- |
+| Uso de Papel             | -100%   |
+| Controle de Frequência   | +95%    |
+| Auditoria de Rotas       | +100%   |
+| Transparência            | +90%    |
+| Confiabilidade dos Dados | +98%    |
+
+---
+
+# 👨‍💻 Equipe
 
 ## Cliente
 
-Secretaria Municipal de Educação (SEMEC)
+Secretaria Municipal de Educação – SEMEC
 
 ## Supervisor
 
 Alcides Platiny Alves Batista
 
-## Desenvolvedor Líder
-
-Márcio Rodrigues de Oliveira
-
----
-
-# 📄 Licença
-
-Este software é propriedade da Prefeitura Municipal de Conceição do Araguaia e da Secretaria Municipal de Educação (SEMEC).
-
-Todos os direitos reservados.
-
----
-
-# 📞 Contato
+## Arquiteto de Solução e Desenvolvedor Líder
 
 **Márcio Rodrigues de Oliveira**
 
-Desenvolvedor Full Stack | Engenheiro de Software
-
-🌐 [https://mgrupo.online](https://mgrupo.online/RAZGO-Tecnologia/index.html)
+* Engenheiro de Software
+* Desenvolvedor Full Stack
+* Especialista em Sistemas Governamentais
 
 ---
 
-© 2026 - Sistema de Monitoramento da Frota Escolar
-Prefeitura de Conceição do Araguaia - PA
+# 🌐 Links
+
+### Site
+
+[https://mgrupo.online](https://mgrupo.online/RAZGO-Tecnologia/index.html)
+
+---
+
+# 📜 Licença
+
+Software proprietário.
+
+Desenvolvido para a Prefeitura Municipal de Conceição do Araguaia e Secretaria Municipal de Educação.
+
+Todos os direitos reservados © 2026.
+
+---
+
+<div align="center">
+
+### 🚍 Educação Inteligente • Gestão Eficiente • Transparência Pública
+
+**SEMEC Conceição do Araguaia**
+
+</div>
