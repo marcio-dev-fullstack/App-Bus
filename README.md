@@ -245,7 +245,7 @@ API-->>APP: Confirmação
 # 📂 Estrutura do Projeto
 
 ```bash
-SEMMA-Fiscaliza/
+BUS-ESCOLAR/
 │
 ├── mobile/
 │   ├── lib/
