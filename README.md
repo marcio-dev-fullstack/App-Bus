@@ -344,10 +344,6 @@ POST /api/auth/login
 
 Secretaria Municipal de Educação – SEMEC
 
-## Supervisor
-
-Alcides Platiny Alves Batista
-
 ## Arquiteto de Solução e Desenvolvedor Líder
 
 **Márcio Rodrigues de Oliveira**
