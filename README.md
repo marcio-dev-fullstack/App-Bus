@@ -354,15 +354,7 @@ Alcides Platiny Alves Batista
 
 * Engenheiro de Software
 * Desenvolvedor Full Stack
-* Especialista em Sistemas Governamentais
-
----
-
-# 🌐 Links
-
-### Site
-
-[https://mgrupo.online](https://mgrupo.online/RAZGO-Tecnologia/index.html)
+* cda.marcio@gmail.com
 
 ---
 
