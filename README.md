@@ -348,7 +348,6 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-* Engenheiro de Software
 * Desenvolvedor Full Stack
 * cda.marcio@gmail.com
 
@@ -358,7 +357,7 @@ Secretaria Municipal de Educação – SEMEC
 
 Software proprietário.
 
-Desenvolvido para a Prefeitura Municipal de Conceição do Araguaia e Secretaria Municipal de Educação.
+Desenvolvido para a Secretaria Municipal de Educação.
 
 Todos os direitos reservados © 2026.
 
