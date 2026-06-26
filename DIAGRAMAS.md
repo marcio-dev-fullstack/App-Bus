@@ -174,12 +174,12 @@ classDiagram
     class DirectionsService { <<Service>> +getDirections(LatLng, LatLng) Future~Map~ }
 
     ChangeNotifier <|-- MapController
-    TickerProviderMixin <|-- MapController
+    MapController --|> TickerProviderMixin
     AppShell o-- MapScreen : exibe
     AppShell ..> MapController : provê via ChangeNotifierProvider
     MapScreen ..> MapController : consome via Consumer
-    MapController *-- PlacesService : usa
-    MapController *-- DirectionsService : usa
+    MapController "1" *-- "1" PlacesService : usa
+    MapController "1" *-- "1" DirectionsService : usa
 ```
 
 ---
