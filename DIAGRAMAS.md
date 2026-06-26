@@ -276,7 +276,7 @@ graph TD
         subgraph "app-bus.apk"
             AppFlutter["Aplicativo Flutter"]
             DbLocal["Banco SQLite"]
-        }
+        end
     end
 
     subgraph "Servidor Cloud (ex: Azure, AWS)"
@@ -284,7 +284,7 @@ graph TD
             subgraph "api-semec.dll"
                 ApiNetCore["API ASP.NET Core"]
             end
-        }
+        end
         subgraph "Servidor de Banco de Dados"
             DbPostgres["Banco PostgreSQL"]
         end
