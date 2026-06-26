@@ -92,22 +92,22 @@ Detalha os principais blocos de construção (contêineres) do sistema.
 graph TD
     subgraph "Dispositivo Móvel (Android)"
         direction TB
-        FlutterApp[<b>Aplicativo Flutter</b><br><i>[Dart]</i><br>Interface do usuário e orquestração das tarefas.]
-        SQLite[<b>Banco de Dados Local</b><br><i>[SQLite + SQLCipher]</i><br>Armazena dados de forma segura para operação offline.]
+        FlutterApp["<b>Aplicativo Flutter</b><br><i>[Dart]</i><br>Interface do usuário e orquestração das tarefas."]
+        SQLite["<b>Banco de Dados Local</b><br><i>[SQLite + SQLCipher]</i><br>Armazena dados de forma segura para operação offline."]
 
         FlutterApp -- "Lê/Escreve em" --> SQLite
     end
 
     subgraph "Infraestrutura do Servidor"
         direction TB
-        WebApp[<b>Aplicação Web API</b><br><i>[ASP.NET Core]</i><br>Implementa a lógica de negócio e os endpoints.]
-        PostgresDB[<b>Banco de Dados Central</b><br><i>[PostgreSQL]</i><br>Armazena permanentemente todos os dados do sistema.]
+        WebApp["<b>Aplicação Web API</b><br><i>[ASP.NET Core]</i><br>Implementa a lógica de negócio e os endpoints."]
+        PostgresDB["<b>Banco de Dados Central</b><br><i>[PostgreSQL]</i><br>Armazena permanentemente todos os dados do sistema."]
 
         WebApp -- "Lê/Escreve em" --> PostgresDB
     end
 
-    Monitor[<b>Monitor</b><br>(Usuário)]
-    Admin[<b>Administrador</b><br>(Usuário)]
+    Monitor["<b>Monitor</b><br>(Usuário)"]
+    Admin["<b>Administrador</b><br>(Usuário)"]
 
     Monitor -- "Usa" --> FlutterApp
     FlutterApp -- "Faz chamadas API via HTTPS" --> WebApp
