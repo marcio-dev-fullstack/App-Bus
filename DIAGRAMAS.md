@@ -271,27 +271,27 @@ sequenceDiagram
 Mostra como os componentes de software são distribuídos na infraestrutura de hardware.
 
 ```mermaid
-deploymentDiagram
-    node "Dispositivo Móvel (Android)" {
-        artifact "app-bus.apk" {
-            component [Aplicativo Flutter]
-            database [Banco SQLite]
+graph TD
+    subgraph "Dispositivo Móvel (Android)"
+        subgraph "app-bus.apk"
+            AppFlutter["Aplicativo Flutter"]
+            DbLocal["Banco SQLite"]
         }
-    }
+    end
 
-    node "Servidor Cloud (ex: Azure, AWS)" {
-        node "Servidor de Aplicação" {
-            artifact "api-semec.dll" {
-                component [API ASP.NET Core]
-            }
+    subgraph "Servidor Cloud (ex: Azure, AWS)"
+        subgraph "Servidor de Aplicação"
+            subgraph "api-semec.dll"
+                ApiNetCore["API ASP.NET Core"]
+            end
         }
-        node "Servidor de Banco de Dados" {
-            database [Banco PostgreSQL]
-        }
-    }
+        subgraph "Servidor de Banco de Dados"
+            DbPostgres["Banco PostgreSQL"]
+        end
+    end
 
-    [Aplicativo Flutter] -->> [API ASP.NET Core] : HTTPS/JSON
-    [API ASP.NET Core] -->> [Banco PostgreSQL] : TCP/IP
+    AppFlutter -- "HTTPS/JSON" --> ApiNetCore
+    ApiNetCore -- "TCP/IP" --> DbPostgres
 ```
 
 ---
