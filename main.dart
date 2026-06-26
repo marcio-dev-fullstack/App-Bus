@@ -8,15 +8,18 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/features/auth/controllers/auth_controller.dart';
 import 'package:front_end/features/auth/screens/login_screen.dart';
-import 'package:front_end/features/auth/screens/splash_screen.dart';
 import 'package:front_end/features/shell/screens/app_shell.dart';
 import 'package:front_end/locator.dart';
 import 'package:front_end/core/theme/app_theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main({Function? setupDependencies}) {
+Future<void> main({Function? setupDependencies}) async {
   // Garante que os bindings do Flutter foram inicializados antes de rodar o app.
   // É útil se você precisar executar código assíncrono antes de runApp().
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Carrega as variáveis de ambiente do arquivo .env
+  await dotenv.load(fileName: ".env");
 
   // Se uma função de configuração for fornecida (pelos testes), execute-a.
   // Caso contrário, execute a configuração padrão de produção.
@@ -65,12 +68,10 @@ class _AppBusState extends State<AppBus> {
   }
 
   Widget _buildHomeScreen() {
-    // Enquanto o `tryAutoLogin` está em execução, exibe a tela de splash.
-    if (_authController.isLoading) {
-      return const SplashScreen();
-    }
-    // Após a verificação, se o usuário estiver autenticado, mostra a AppShell.
-    // Caso contrário, mostra a LoginScreen.
+    // A splash screen nativa será exibida automaticamente enquanto o app carrega.
+    // Quando o `tryAutoLogin` terminar, o `isLoading` se tornará falso e o listener
+    // reconstruirá a UI, mostrando a tela correta.
+    // Se o usuário estiver autenticado, mostra a AppShell. Caso contrário, mostra a LoginScreen.
     return _authController.isAuthenticated
         ? const AppShell()
         : const LoginScreen();

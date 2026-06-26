@@ -49,17 +49,30 @@ class TripRepositoryLocal {
       whereArgs: [0],
     );
 
-    // Para cada viagem, busca os embarques associados.
-    for (var i = 0; i < viagens.length; i++) {
-      final embarques = await db.query(
-        'embarques',
-        where: 'id_viagem = ?',
-        whereArgs: [viagens[i]['id']],
-      );
-      viagens[i] = {...viagens[i], 'embarques': embarques};
+    if (viagens.isEmpty) {
+      return [];
     }
 
-    return viagens;
+    // Otimização: Evita o problema N+1.
+    // 1. Coleta todos os IDs das viagens pendentes.
+    final List<int> idsViagens = viagens.map((v) => v['id'] as int).toList();
+
+    // 2. Busca todos os embarques para essas viagens em uma única consulta.
+    final List<Map<String, dynamic>> todosEmbarques = await db.query(
+      'embarques',
+      where: 'id_viagem IN (${List.filled(idsViagens.length, '?').join(',')})',
+      whereArgs: idsViagens,
+    );
+
+    // 3. Associa os embarques às suas respectivas viagens em memória.
+    final List<Map<String, dynamic>> viagensCompletas = viagens.map((viagem) {
+      final embarquesDaViagem = todosEmbarques
+          .where((e) => e['id_viagem'] == viagem['id'])
+          .toList();
+      return {...viagem, 'embarques': embarquesDaViagem};
+    }).toList();
+
+    return viagensCompletas;
   }
 
   /// Marca uma viagem específica como sincronizada no banco de dados local.
@@ -71,5 +84,18 @@ class TripRepositoryLocal {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  /// Obtém o ID da viagem que está atualmente em andamento (sem data_fim).
+  /// Retorna o ID da viagem mais recente que não foi finalizada.
+  Future<int?> obterViagemAtualId() async {
+    final db = await _dbService.database;
+    final List<Map<String, dynamic>> result = await db.query(
+      'viagens',
+      where: 'data_fim IS NULL',
+      orderBy: 'data_inicio DESC',
+      limit: 1,
+    );
+    return result.isNotEmpty ? result.first['id'] as int? : null;
   }
 }

@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:front_end/features/auth/controllers/auth_controller.dart';
 import 'package:front_end/features/auth/screens/login_screen.dart';
 import 'package:front_end/features/home/screens/home_screen.dart';
+import 'package:front_end/features/student/screens/student_registration_screen.dart';
+import 'package:front_end/features/student/screens/student_list_screen.dart';
 import 'package:front_end/features/map/screens/map_screen.dart';
 import 'package:front_end/locator.dart';
 
@@ -92,6 +94,41 @@ class _AppShellState extends State<AppShell> {
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed, // Garante boa visibilidade
       ),
+      floatingActionButton: _selectedIndex == 0
+          ? _buildHomeFABs(context)
+          : null,
+    );
+  }
+
+  /// Constrói os botões de ação flutuantes para a tela Home.
+  Widget _buildHomeFABs(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        FloatingActionButton.extended(
+          heroTag: 'fab_register_student', // Tag única para o Hero
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const StudentRegistrationScreen(),
+              ),
+            );
+          },
+          icon: const Icon(Icons.person_add),
+          label: const Text('Cadastrar'),
+        ),
+        const SizedBox(width: 16),
+        FloatingActionButton.extended(
+          heroTag: 'fab_list_students', // Tag única para o Hero
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const StudentListScreen()),
+            );
+          },
+          icon: const Icon(Icons.people),
+          label: const Text('Alunos'),
+        ),
+      ],
     );
   }
 

@@ -1,0 +1,56 @@
+# Nome do Workflow
+name: Flutter CI
+
+# Gatilhos: Este workflow será executado em pushes e pull requests para a branch 'main'.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Define um único job chamado 'build_and_test'
+jobs:
+  build_and_test:
+    # O tipo de máquina virtual que o job irá rodar. 'ubuntu-latest' é rápido e comum.
+    runs-on: ubuntu-latest
+
+    # Define o diretório de trabalho padrão para todos os passos dentro deste job.
+    # Isso garante que todos os comandos flutter sejam executados na pasta correta.
+    defaults:
+      run:
+        working-directory: ./front_end
+
+    steps:
+      # 1. Faz o checkout do seu repositório para que o workflow possa acessá-lo.
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Configura o ambiente Flutter com uma versão específica.
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.10.0" # Use a versão do Flutter do seu projeto
+          channel: "stable"
+          cache: true # Habilita o cache para acelerar futuros builds
+
+      # 3. Instala as dependências do projeto.
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 4. Executa os testes e gera o relatório de cobertura.
+      - name: Run tests and generate coverage
+        run: flutter test --coverage
+
+      # 5. Verifica se a cobertura de testes atinge o limite mínimo.
+      - name: Check test coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v2
+        with:
+          path: ./front_end/coverage/lcov.info # Caminho para o arquivo de cobertura
+          min_coverage: 80 # O limite mínimo de cobertura em porcentagem
+          exclude: "**/*.mocks.dart" # Exclui arquivos de mock do cálculo
+
+
+      # (Opcional) Passo para fazer o build do App Bundle para validar a compilação.
+      # Descomente se quiser garantir que o app compila em modo release.
+      # - name: Build App Bundle
+      #   run: flutter build appbundle --release
