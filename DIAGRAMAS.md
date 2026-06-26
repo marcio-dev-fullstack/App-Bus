@@ -67,12 +67,12 @@ Visão macro do sistema e suas interações com sistemas externos e usuários.
 graph TD
     subgraph "Sistema de Monitoramento Escolar"
         direction LR
-        App[<b>Aplicativo Móvel</b><br>(Flutter)<br>Realiza a coleta de dados em campo (offline/online).]
-        API[<b>API Central</b><br>(ASP.NET Core)<br>Gerencia, armazena e disponibiliza os dados consolidados.]
+        App["<b>Aplicativo Móvel</b><br>(Flutter)<br>Realiza a coleta de dados em campo (offline/online)."]
+        API["<b>API Central</b><br>(ASP.NET Core)<br>Gerencia, armazena e disponibiliza os dados consolidados."]
     end
 
-    Monitor[<b>Monitor de Ônibus</b><br>(Usuário)<br>Usa o aplicativo para registrar a frequência e rota.]
-    Admin[<b>Administrador SEMEC</b><br>(Usuário)<br>Usa um painel web para gerenciar e auditar os dados.]
+    Monitor["<b>Monitor de Ônibus</b><br>(Usuário)<br>Usa o aplicativo para registrar a frequência e rota."]
+    Admin["<b>Administrador SEMEC</b><br>(Usuário)<br>Usa um painel web para gerenciar e auditar os dados."]
 
     Monitor -- "Usa" --> App
     App -- "Sincroniza dados via HTTPS/JSON" --> API
