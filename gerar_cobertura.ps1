@@ -24,7 +24,7 @@ Write-Host "     GERADOR DE RELATÓRIO DE COBERTURA DE TESTES    " -ForegroundCo
 Write-Host "==================================================" -ForegroundColor Blue
 
 # 1. Garante que o script execute a partir do diretório do projeto Flutter
-Push-Location (Join-Path $PSScriptRoot "front_end")
+Push-Location (Join-Path $PSScriptRoot "mobile")
 Write-Host "`nDiretório de trabalho: $(Get-Location)" -ForegroundColor Cyan
 
 # 2. Executa os testes e gera o arquivo lcov.info

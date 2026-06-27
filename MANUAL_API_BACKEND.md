@@ -225,15 +225,16 @@ Com o endpoint criado, você pode iniciar a API para testes.
 
 ---
 
-## 3. Implementando Autenticação com JWT
+## 3. Implementando Autenticação Segura com ASP.NET Core Identity e JWT
 
-Para proteger os endpoints e garantir que apenas usuários autorizados possam enviar dados, implementaremos a autenticação baseada em JSON Web Tokens (JWT).
+Para proteger a API e gerenciar usuários de forma segura, usaremos o **ASP.NET Core Identity** para o gerenciamento de usuários e senhas, combinado com **JWT** para a autenticação baseada em tokens.
 
-### Passo 3.1: Instalar o Pacote JWT
+### Passo 3.1: Instalar os Pacotes Necessários
 
 No terminal, na pasta `backend`, instale o pacote de autenticação do ASP.NET Core:
 
 ```bash
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 ```
 
@@ -362,12 +363,14 @@ namespace AppBus.Backend.Controllers
             return Unauthorized("Credenciais inválidas.");
         }
 
-        private string GenerateJwtToken(string email)
+        private async Task<string> GenerateJwtToken(ApplicationUser user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())

@@ -7,37 +7,42 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:front_end/features/auth/services/auth_service.dart';
+import 'package:front_end/locator.dart';
 
 /// Controller responsável por gerenciar o estado de autenticação
 /// e o armazenamento seguro do token JWT.
 class AuthController extends ChangeNotifier {
+  // Injeta o serviço de autenticação.
+  final AuthService _authService = locator<AuthService>();
   // Instância do flutter_secure_storage para armazenamento seguro.
   final _storage = const FlutterSecureStorage();
-  final String _tokenKey = 'jwt_token'; // Chave para armazenar o token.
+  final String _accessTokenKey = 'access_token';
+  final String _refreshTokenKey = 'refresh_token';
 
-  String? _token;
+  String? _accessToken;
+  String? _refreshToken;
   bool _isAuthenticated = false;
   bool _isLoading = true;
 
   // Getters públicos para a UI reagir.
   bool get isAuthenticated => _isAuthenticated;
   bool get isLoading => _isLoading;
-  String? get token => _token;
+  String? get token => _accessToken; // O getter principal retorna o access token
 
   /// Tenta fazer o login do usuário.
-  /// Em um app real, isso chamaria um `AuthService` que se comunica com a API.
   Future<bool> login(String email, String password) async {
     _setLoading(true);
     try {
-      // --- LÓGICA DE CHAMADA À API ---
-      // final apiToken = await _authService.login(email, password);
-      // Para este exemplo, vamos simular um token recebido da API.
-      final apiToken = "simulated_jwt_token_from_api";
+      // Chama o serviço para obter o token da API.
+      final tokens = await _authService.login(email, password);
 
-      if (apiToken != null) {
-        // 1. Armazena o token de forma segura.
-        await _storage.write(key: _tokenKey, value: apiToken);
-        _token = apiToken;
+      if (tokens != null && tokens['accessToken'] != null && tokens['refreshToken'] != null) {
+        // 1. Armazena os tokens de forma segura.
+        await _storage.write(key: _accessTokenKey, value: tokens['accessToken']);
+        await _storage.write(key: _refreshTokenKey, value: tokens['refreshToken']);
+        _accessToken = tokens['accessToken'];
+        _refreshToken = tokens['refreshToken'];
         _isAuthenticated = true;
         
         _setLoading(false);
@@ -53,18 +58,41 @@ class AuthController extends ChangeNotifier {
     return false;
   }
 
+  /// Tenta registrar um novo usuário.
+  Future<bool> register(String email, String password) async {
+    _setLoading(true);
+    try {
+      final success = await _authService.register(email, password);
+      _setLoading(false);
+      return success;
+    } catch (e) {
+      print("Erro no registro: $e");
+      _setLoading(false);
+      return false;
+    }
+  }
+
   /// Tenta carregar um token do armazenamento seguro para auto-login.
   /// Chamado na inicialização do app.
   Future<void> tryAutoLogin() async {
     _setLoading(true);
 
     // Tenta ler o token do armazenamento seguro.
-    final storedToken = await _storage.read(key: _tokenKey);
+    final storedAccessToken = await _storage.read(key: _accessTokenKey);
+    final storedRefreshToken = await _storage.read(key: _refreshTokenKey);
 
-    if (storedToken != null) {
-      // TODO: Idealmente, validar o token com a API antes de autenticar.
-      _token = storedToken;
-      _isAuthenticated = true;
+    if (storedAccessToken != null && storedRefreshToken != null) {
+      // Valida o token com a API antes de autenticar o usuário.
+      final isTokenValid = await _authService.validateToken(storedAccessToken);
+
+      if (isTokenValid) {
+        _accessToken = storedAccessToken;
+        _refreshToken = storedRefreshToken;
+        _isAuthenticated = true;
+      } else {
+        // Se o token for inválido, limpa o armazenamento local.
+        await logout();
+      }
     }
 
     _setLoading(false);
@@ -73,11 +101,14 @@ class AuthController extends ChangeNotifier {
 
   /// Realiza o logout do usuário.
   Future<void> logout() async {
-    _token = null;
+    _accessToken = null;
+    _refreshToken = null;
     _isAuthenticated = false;
     
-    // Deleta o token do armazenamento seguro.
-    await _storage.delete(key: _tokenKey);
+    // Deleta os tokens do armazenamento seguro.
+    // O ideal seria também chamar o endpoint /revoke da API aqui.
+    await _storage.delete(key: _accessTokenKey);
+    await _storage.delete(key: _refreshTokenKey);
     
     notifyListeners();
   }

@@ -312,7 +312,7 @@ POST /api/auth/login
 
 * [x] Especificação de Requisitos
 * [x] Arquitetura Inicial
-* [ ] Protótipo Mobile
+* [x] Protótipo Mobile
 * [ ] API REST
 
 ---

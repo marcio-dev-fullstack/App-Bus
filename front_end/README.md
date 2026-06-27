@@ -44,11 +44,11 @@ Monitorar embarques e desembarques em tempo real.
 
 Atender exigências de:
 
-* FNDE
-* INEP
-* Tribunal de Contas
-* Ministério Público
-* Lei Geral de Proteção de Dados (LGPD)
+- FNDE
+- INEP
+- Tribunal de Contas
+- Ministério Público
+- Lei Geral de Proteção de Dados (LGPD)
 
 ---
 
@@ -56,19 +56,19 @@ Atender exigências de:
 
 ## 👦 Reconhecimento Facial Offline
 
-* Identificação biométrica sem internet
-* Processamento local (Edge AI)
-* Resposta inferior a 3 segundos
-* Confirmação visual do monitor
+- Identificação biométrica sem internet
+- Processamento local (Edge AI)
+- Resposta inferior a 3 segundos
+- Confirmação visual do monitor
 
 ---
 
 ## 📍 Rastreamento Inteligente
 
-* Captura automática de GPS
-* Histórico completo da rota
-* Trilha auditável
-* Registro georreferenciado dos embarques
+- Captura automática de GPS
+- Histórico completo da rota
+- Trilha auditável
+- Registro georreferenciado dos embarques
 
 ---
 
@@ -94,9 +94,9 @@ O sistema foi projetado para operar em ambientes rurais sem cobertura de rede.
 
 Quando o veículo:
 
-* Entrar na área da escola
-* Conectar ao Wi-Fi autorizado
-* Detectar conexão disponível
+- Entrar na área da escola
+- Conectar ao Wi-Fi autorizado
+- Detectar conexão disponível
 
 O aplicativo sincroniza automaticamente os dados.
 
@@ -203,11 +203,11 @@ O sistema manipula informações sensíveis de menores de idade.
 
 ### Implementações
 
-* Criptografia AES-256
-* Banco SQLCipher
-* Login JWT
-* Comunicação HTTPS
-* Tokens de acesso temporários
+- Criptografia AES-256
+- Banco SQLCipher
+- Login JWT
+- Comunicação HTTPS
+- Tokens de acesso temporários
 
 ---
 
@@ -301,28 +301,28 @@ POST /api/auth/login
 
 ## Versão 1.0
 
-* [x] Especificação de Requisitos
-* [x] Arquitetura Inicial
-* [ ] Protótipo Mobile
-* [ ] API REST
+- [x] Especificação de Requisitos
+- [x] Arquitetura Inicial
+- [x] Protótipo Mobile
+- [ ] API REST
 
 ---
 
 ## Versão 2.0
 
-* [ ] Dashboard Web
-* [ ] Painel Administrativo
-* [ ] BI Educacional
-* [ ] Relatórios Avançados
+- [ ] Dashboard Web
+- [ ] Painel Administrativo
+- [ ] BI Educacional
+- [ ] Relatórios Avançados
 
 ---
 
 ## Versão 3.0
 
-* [ ] Aplicativo dos Pais
-* [ ] Notificações em Tempo Real
-* [ ] Monitoramento ao Vivo
-* [ ] IA para Auditoria de Rotas
+- [ ] Aplicativo dos Pais
+- [ ] Notificações em Tempo Real
+- [ ] Monitoramento ao Vivo
+- [ ] IA para Auditoria de Rotas
 
 ---
 
@@ -348,8 +348,8 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-* Desenvolvedor Full Stack
-* cda.marcio@gmail.com
+- Desenvolvedor Full Stack
+- cda.marcio@gmail.com
 
 ---
 

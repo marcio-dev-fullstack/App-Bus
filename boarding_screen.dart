@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:front_end/features/face_recognition/services/face_recognition_service.dart';
 import 'package:front_end/features/student/repositories/student_repository_local.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:front_end/features/shell/screens/app_shell.dart';
+import 'package:front_end/features/tracking/services/tracking_service.dart';
 import 'package:front_end/core/services/location_service.dart';
 import 'package:front_end/locator.dart';
 import 'package:front_end/features/trip/repositories/trip_repository_local.dart';
@@ -37,6 +39,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
   final StudentRepositoryLocal _studentRepository = StudentRepositoryLocal();
   final LocationService _locationService = locator<LocationService>();
   final TripRepositoryLocal _tripRepository = TripRepositoryLocal();
+  final TrackingService _trackingService = locator<TrackingService>();
 
   // Controle da Câmera
   CameraController? _cameraController;
@@ -204,7 +207,19 @@ class _BoardingScreenState extends State<BoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Embarque - ${widget.routeName}')),
+      appBar: AppBar(
+        title: Text('Embarque - ${widget.routeName}'),
+        actions: [
+          TextButton.icon(
+            onPressed: () => _showEndTripConfirmationDialog(context),
+            icon: const Icon(Icons.done_all, color: Colors.white),
+            label: const Text('FINALIZAR', style: TextStyle(color: Colors.white)),
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+          ),
+        ],
+      ),
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -262,6 +277,58 @@ class _BoardingScreenState extends State<BoardingScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _showEndTripConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text('Confirmar Finalização'),
+          content: const Text('Deseja realmente finalizar a viagem atual?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () => Navigator.of(dialogContext).pop(),
+            ),
+            FilledButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                _endTrip(context);
+              },
+              child: const Text('Finalizar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _endTrip(BuildContext context) async {
+    try {
+      // 1. Para o rastreamento contínuo por GPS.
+      await _trackingService.stopTracking();
+
+      // 2. Obtém o ID da viagem atual e a marca como finalizada.
+      final tripId = await _tripRepository.obterViagemAtualId();
+      if (tripId != null) {
+        await _tripRepository.finalizarViagem(tripId);
+      }
+
+      // 3. Navega de volta para a tela inicial, limpando a pilha de navegação.
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const AppShell()),
+          (route) => false,
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao finalizar viagem: $e'), backgroundColor: Colors.red),
+        );
+      }
+    }
   }
 }
 

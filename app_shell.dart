@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:front_end/features/auth/controllers/auth_controller.dart';
 import 'package:front_end/features/auth/screens/login_screen.dart';
 import 'package:front_end/features/home/screens/home_screen.dart';
+import 'package:front_end/features/sync/services/geofence_sync_trigger.dart';
+import 'package:front_end/features/sync/services/connectivity_sync_trigger.dart';
 import 'package:front_end/features/student/screens/student_registration_screen.dart';
 import 'package:front_end/features/student/screens/student_list_screen.dart';
 import 'package:front_end/features/map/screens/map_screen.dart';
@@ -24,11 +26,17 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell> {
   // Obtém a instância singleton do AuthController.
   late final AuthController _authController;
+  // Instâncias dos nossos gatilhos de sincronização.
+  late final ConnectivitySyncTrigger _connectivityTrigger;
+  late final GeofenceSyncTrigger _geofenceTrigger;
 
   @override
   void initState() {
     super.initState();
     _authController = locator<AuthController>();
+    // Inicia os monitoramentos de conectividade e geofence.
+    _connectivityTrigger = ConnectivitySyncTrigger()..initialize();
+    _geofenceTrigger = GeofenceSyncTrigger()..initialize();
     _authController.addListener(_onAuthChange);
   }
 
@@ -135,6 +143,9 @@ class _AppShellState extends State<AppShell> {
   @override
   void dispose() {
     _authController.removeListener(_onAuthChange);
+    // Para os monitoramentos ao fazer logout para liberar recursos.
+    _connectivityTrigger.dispose();
+    _geofenceTrigger.dispose();
     // Não chamamos o dispose do controller aqui, pois ele é um singleton.
     super.dispose();
   }

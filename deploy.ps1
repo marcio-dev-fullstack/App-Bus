@@ -1,5 +1,5 @@
 ﻿# Garante que o script execute a partir do diretório do projeto Flutter
-Push-Location (Join-Path $PSScriptRoot "front_end")
+Push-Location (Join-Path $PSScriptRoot "mobile")
 
 Write-Host "Diretório de trabalho alterado para: $(Get-Location)" -ForegroundColor Cyan
 

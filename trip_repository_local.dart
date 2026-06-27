@@ -39,6 +39,17 @@ class TripRepositoryLocal {
     );
   }
 
+  /// Salva um ponto da trilha de GPS no banco de dados local.
+  Future<void> salvarPontoTrilha(Map<String, dynamic> trilhaData) async {
+    final db = await _dbService.database;
+    await db.insert(
+      'trilha_gps',
+      trilhaData,
+      conflictAlgorithm:
+          ConflictAlgorithm.ignore, // Ignora se houver duplicatas
+    );
+  }
+
   /// Obtém todas as viagens que ainda não foram sincronizadas com o servidor.
   /// Retorna uma lista de viagens, cada uma contendo seus respectivos embarques.
   Future<List<Map<String, dynamic>>> obterViagensPendentes() async {
@@ -58,18 +69,38 @@ class TripRepositoryLocal {
     final List<int> idsViagens = viagens.map((v) => v['id'] as int).toList();
 
     // 2. Busca todos os embarques para essas viagens em uma única consulta.
-    final List<Map<String, dynamic>> todosEmbarques = await db.query(
+    final Future<List<Map<String, dynamic>>> futureEmbarques = db.query(
       'embarques',
       where: 'id_viagem IN (${List.filled(idsViagens.length, '?').join(',')})',
       whereArgs: idsViagens,
     );
+
+    // 3. Busca todos os pontos da trilha de GPS para essas viagens.
+    final Future<List<Map<String, dynamic>>> futureTrilhas = db.query(
+      'trilha_gps',
+      where: 'id_viagem IN (${List.filled(idsViagens.length, '?').join(',')})',
+      whereArgs: idsViagens,
+    );
+
+    // Executa as consultas em paralelo para otimizar o tempo.
+    final results = await Future.wait([futureEmbarques, futureTrilhas]);
+    final todosEmbarques = results[0];
+    final todasTrilhas = results[1];
 
     // 3. Associa os embarques às suas respectivas viagens em memória.
     final List<Map<String, dynamic>> viagensCompletas = viagens.map((viagem) {
       final embarquesDaViagem = todosEmbarques
           .where((e) => e['id_viagem'] == viagem['id'])
           .toList();
-      return {...viagem, 'embarques': embarquesDaViagem};
+      final trilhaDaViagem = todasTrilhas
+          .where((t) => t['id_viagem'] == viagem['id'])
+          .toList();
+
+      return {
+        ...viagem,
+        'embarques': embarquesDaViagem,
+        'trilhaGps': trilhaDaViagem,
+      };
     }).toList();
 
     return viagensCompletas;
@@ -81,6 +112,17 @@ class TripRepositoryLocal {
     await db.update(
       'viagens',
       {'sincronizado': 1}, // O valor a ser atualizado.
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  /// Finaliza uma viagem, definindo sua data_fim para o momento atual.
+  Future<void> finalizarViagem(int id) async {
+    final db = await _dbService.database;
+    await db.update(
+      'viagens',
+      {'data_fim': DateTime.now().toIso8601String()},
       where: 'id = ?',
       whereArgs: [id],
     );

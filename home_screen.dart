@@ -1,6 +1,7 @@
 /// ## Arquiteto de Solução e Desenvolvedor Líder
 ///
 /// **Márcio Rodrigues de Oliveira**
+import 'package:front_end/features/trip/screens/route_details_screen.dart';
 ///
 /// * Desenvolvedor Full Stack
 /// * cda.marcio@gmail.com

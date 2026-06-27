@@ -18,7 +18,7 @@ jobs:
     # Isso garante que todos os comandos flutter sejam executados na pasta correta.
     defaults:
       run:
-        working-directory: ./front_end
+        working-directory: ./mobile
 
     steps:
       # 1. Faz o checkout do seu repositório para que o workflow possa acessá-lo.
@@ -45,7 +45,7 @@ jobs:
       - name: Check test coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2
         with:
-          path: ./front_end/coverage/lcov.info # Caminho para o arquivo de cobertura
+          path: ./mobile/coverage/lcov.info # Caminho para o arquivo de cobertura
           min_coverage: 80 # O limite mínimo de cobertura em porcentagem
           exclude: "**/*.mocks.dart" # Exclui arquivos de mock do cálculo
 
