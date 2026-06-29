@@ -1,9 +1,6 @@
-/// ## Arquiteto de Solução e Desenvolvedor Líder
-///
-/// **Márcio Rodrigues de Oliveira**
-///
-/// * Desenvolvedor Full Stack
-/// * cda.marcio@gmail.com
+/// AUTOR:Arquiteto de Solução e Desenvolvedor Líder
+/// Márcio Rodrigues de Oliveira
+/// cda.marcio@gmail.com
 
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';

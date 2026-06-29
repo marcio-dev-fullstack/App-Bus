@@ -1,8 +1,8 @@
-# Manual de Testes – Aplicativo App-Bus
+/// AUTOR:Arquiteto de Solução e Desenvolvedor Líder
+/// Márcio Rodrigues de Oliveira
+/// cda.marcio@gmail.com
 
-**Versão do Documento:** 1.0
-**Data:** 26 de junho de 2026
-**Autor:** Gemini Code Assist
+# Manual de Testes – Aplicativo App-Bus
 
 ---
 
@@ -21,14 +21,14 @@ Validar as funcionalidades principais do aplicativo App-Bus em um ambiente de si
 
 ### Passo 2.2: Instalar o Aplicativo para Teste
 
-1.  No VS Code, abra um terminal e navegue até a pasta raiz do projeto Flutter:
-    ```powershell
-    cd C:\PROJETOS\App-Bus\front_end
-    ```
-2.  Execute o comando para instalar e rodar o aplicativo no dispositivo/emulador:
-    ```powershell
-    flutter run
-    ```
+1. No VS Code, abra um terminal e navegue até a pasta raiz do projeto Flutter:
+   ```powershell
+   cd C:\PROJETOS\App-Bus\front_end
+   ```
+2. Execute o comando para instalar e rodar o aplicativo no dispositivo/emulador:
+   ```powershell
+   flutter run
+   ```
 
 ### Passo 2.3: Dados de Teste
 

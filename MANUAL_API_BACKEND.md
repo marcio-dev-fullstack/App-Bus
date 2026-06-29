@@ -1,9 +1,6 @@
-# Manual de Criação da API Backend – App-Bus
-
-**Versão do Documento:** 1.0
-**Data:** 26 de junho de 2026
-**Autor:** Gemini Code Assist
-**Tecnologias:** ASP.NET Core, Entity Framework Core, PostgreSQL
+/// AUTOR:Arquiteto de Solução e Desenvolvedor Líder
+/// Márcio Rodrigues de Oliveira
+/// cda.marcio@gmail.com
 
 ---
 
