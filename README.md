@@ -1,7 +1,3 @@
-/// AUTOR:Arquiteto de Solução e Desenvolvedor Líder
-/// Márcio Rodrigues de Oliveira
-/// cda.marcio@gmail.com
-
 # 🚍 Sistema de Monitoramento Inteligente da Frota Escolar
 
 <div align="center">
