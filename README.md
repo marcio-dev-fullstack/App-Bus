@@ -349,7 +349,7 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-- Arquiteto de Software/Desenvolvedor Fullstack
+- (65) 99610-8749
 - cda.marcio@gmail.com
 
 ---
