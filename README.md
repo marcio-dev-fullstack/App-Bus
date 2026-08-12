@@ -345,7 +345,7 @@ POST /api/auth/login
 
 Secretaria Municipal de Educação – SEMEC
 
-## Arquiteto de Software |Desenvolvedor Líder
+## Arquiteto de Software | Desenvolvedor Líder
 
 **Márcio Rodrigues de Oliveira**
 
