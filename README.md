@@ -347,7 +347,7 @@ POST /api/auth/login
 
 Secretaria Municipal de Educação – SEMEC
 
-## Arquiteto de Solução e Desenvolvedor Líder
+## Arquiteto de Software |Desenvolvedor Líder
 
 **Márcio Rodrigues de Oliveira**
 
@@ -356,9 +356,21 @@ Secretaria Municipal de Educação – SEMEC
 
 ---
 
+## Contribuição
+
+Contribuições devem ser propostas por meio de branches ou pull requests. Toda alteração deve incluir descrição objetiva, testes compatíveis e atualização da documentação quando necessário.
+
+## Licença
+
+A licença e os termos de uso deste projeto devem ser definidos pelo responsável pelo repositório. Enquanto essa definição não estiver disponível, o uso, a cópia e a distribuição do código devem ser tratados conforme as permissões formalmente estabelecidas para o projeto.
+
+---
+
+**Sistema de Monitoramento Inteligente da Frota Escolar** — tecnologia para uma operação mais segura, rastreável e eficiente.
+
 # 📜 Licença
 
-Software proprietário.
+Software Proprietário.
 
 Desenvolvido por: MAZZ.
 
@@ -373,15 +385,3 @@ Todos os direitos reservados © 2026.
 **SEMEC - Secretaria Municipal de Educação**
 
 </div>
-
-## Contribuição
-
-Contribuições devem ser propostas por meio de branches ou pull requests. Toda alteração deve incluir descrição objetiva, testes compatíveis e atualização da documentação quando necessário.
-
-## Licença
-
-A licença e os termos de uso deste projeto devem ser definidos pelo responsável pelo repositório. Enquanto essa definição não estiver disponível, o uso, a cópia e a distribuição do código devem ser tratados conforme as permissões formalmente estabelecidas para o projeto.
-
----
-
-**Sistema de Monitoramento Inteligente da Frota Escolar** — tecnologia para uma operação mais segura, rastreável e eficiente.
