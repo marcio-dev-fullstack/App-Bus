@@ -18,11 +18,14 @@
 
 ---
 
-# 📖 Visão Geral
+Sistema para modernizar a gestão do transporte escolar por meio de **inteligência artificial**, **geolocalização** e **operação offline**. A solução automatiza o controle de frequência dos estudantes, acompanha as rotas dos veículos e permite a sincronização segura dos dados quando houver conectividade disponível.
 
-O **Sistema de Monitoramento Inteligente da Frota Escolar** foi projetado para modernizar a gestão do transporte escolar municipal da Prefeitura de Conceição do Araguaia, automatizando o controle de frequência dos alunos através de reconhecimento facial offline, monitoramento geográfico das rotas e sincronização segura dos dados com a Secretaria Municipal de Educação.
+## Visão geral
 
-O projeto atende às necessidades operacionais das áreas urbanas e rurais do município, garantindo funcionamento contínuo mesmo em locais sem cobertura de internet.
+O sistema foi projetado para apoiar a operação de frotas escolares em áreas urbanas e rurais, inclusive em locais com cobertura de internet limitada ou inexistente. O funcionamento offline permite registrar embarques, desembarques, informações de rota e relatórios localmente, mantendo a continuidade da operação.
+
+Quando uma conexão confiável é identificada, os dados armazenados no dispositivo podem ser sincronizados com a API central, conforme as regras de segurança e autenticação configuradas para o ambiente.
+
 
 ---
 
@@ -348,7 +351,7 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-- Desenvolvedor Full Stack
+- Arquiteto de Software/Desenvolvedor Fullstack
 - cda.marcio@gmail.com
 
 ---
@@ -357,7 +360,7 @@ Secretaria Municipal de Educação – SEMEC
 
 Software proprietário.
 
-Desenvolvido para a Secretaria Municipal de Educação.
+Desenvolvido por: MAZZ.
 
 Todos os direitos reservados © 2026.
 
@@ -367,6 +370,18 @@ Todos os direitos reservados © 2026.
 
 ### 🚍 Educação Inteligente • Gestão Eficiente • Transparência Pública
 
-**SEMEC Conceição do Araguaia**
+**SEMEC - Secretaria Municipal de Educação**
 
 </div>
+
+## Contribuição
+
+Contribuições devem ser propostas por meio de branches ou pull requests. Toda alteração deve incluir descrição objetiva, testes compatíveis e atualização da documentação quando necessário.
+
+## Licença
+
+A licença e os termos de uso deste projeto devem ser definidos pelo responsável pelo repositório. Enquanto essa definição não estiver disponível, o uso, a cópia e a distribuição do código devem ser tratados conforme as permissões formalmente estabelecidas para o projeto.
+
+---
+
+**Sistema de Monitoramento Inteligente da Frota Escolar** — tecnologia para uma operação mais segura, rastreável e eficiente.
