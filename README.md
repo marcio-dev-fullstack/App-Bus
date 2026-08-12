@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![SEMEC](https://img.shields.io/badge/SEMEC-Conceição%20do%20Araguaia-green)
+![SEMEC](https://img.shields.io/badge/SEMEC)
 
 ![Version](https://img.shields.io/badge/Version-1.1-blue)
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange)
