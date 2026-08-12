@@ -380,6 +380,4 @@ Todos os direitos reservados © 2026.
 
 ### 🚍 Educação Inteligente • Gestão Eficiente • Transparência Pública
 
-**SEMEC - Secretaria Municipal de Educação**
-
 </div>
