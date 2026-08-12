@@ -18,8 +18,6 @@
 
 ---
 
-Sistema para modernizar a gestão do transporte escolar por meio de **inteligência artificial**, **geolocalização** e **operação offline**. A solução automatiza o controle de frequência dos estudantes, acompanha as rotas dos veículos e permite a sincronização segura dos dados quando houver conectividade disponível.
-
 ## Visão geral
 
 O sistema foi projetado para apoiar a operação de frotas escolares em áreas urbanas e rurais, inclusive em locais com cobertura de internet limitada ou inexistente. O funcionamento offline permite registrar embarques, desembarques, informações de rota e relatórios localmente, mantendo a continuidade da operação.
