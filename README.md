@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![SEMEC](https://img.shields.io/badge/SEMEC)
+![SEMEC](https://img.shields.io/badge/Secretaria_Municipal_de_Educação-blue)
 
 ![Version](https://img.shields.io/badge/Version-1.1-blue)
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange)
