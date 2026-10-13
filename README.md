@@ -343,8 +343,6 @@ POST /api/auth/login
 
 Secretaria Municipal de Educação
 
-# Equipe
-
 ## Arquiteto de Software | Desenvolvedor Líder
 
 **Márcio Rodrigues de Oliveira**
