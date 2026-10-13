@@ -339,11 +339,11 @@ POST /api/auth/login
 
 ---
 
-# 👨‍💻 Equipe
-
-## Cliente
+# 👨‍💻 Cliente
 
 Secretaria Municipal de Educação
+
+# 👨‍💻 Equipe
 
 ## Arquiteto de Software | Desenvolvedor Líder
 
