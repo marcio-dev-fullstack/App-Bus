@@ -349,7 +349,7 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-- (62) 99646-6033
+- (62) 9 9646-6033
 
 ---
 
