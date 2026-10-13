@@ -349,7 +349,7 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-- https://zentix.eng.br
+- (62) 99646-6033
 
 ---
 
@@ -369,7 +369,7 @@ A licença e os termos de uso deste projeto devem ser definidos pelo responsáve
 
 Software Proprietário.
 
-Desenvolvido por: ZENTIX Tecnologia.
+Desenvolvido por: https://zentix.eng.br
 
 Todos os direitos reservados © 2026.
 
