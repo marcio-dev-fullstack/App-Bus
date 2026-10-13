@@ -349,7 +349,7 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-- cda.marcio@gmail.com
+- https://zentix.eng.br
 
 ---
 
