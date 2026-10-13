@@ -343,7 +343,7 @@ POST /api/auth/login
 
 ## Cliente
 
-Secretaria Municipal de Educação – SEMEC
+Secretaria Municipal de Educação
 
 ## Arquiteto de Software | Desenvolvedor Líder
 
