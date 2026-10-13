@@ -343,7 +343,7 @@ POST /api/auth/login
 
 Secretaria Municipal de Educação
 
-# 👨‍💻 Equipe
+# Equipe
 
 ## Arquiteto de Software | Desenvolvedor Líder
 
