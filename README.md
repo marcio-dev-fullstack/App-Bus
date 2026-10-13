@@ -349,7 +349,6 @@ Secretaria Municipal de Educação – SEMEC
 
 **Márcio Rodrigues de Oliveira**
 
-- (65) 99610-8749
 - cda.marcio@gmail.com
 
 ---
@@ -370,7 +369,7 @@ A licença e os termos de uso deste projeto devem ser definidos pelo responsáve
 
 Software Proprietário.
 
-Desenvolvido por: MAZZ.
+Desenvolvido por: ZENTIX Tecnologia.
 
 Todos os direitos reservados © 2026.
 
