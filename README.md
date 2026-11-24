@@ -361,14 +361,6 @@ A licença e os termos de uso deste projeto devem ser definidos pelo responsáve
 
 ---
 
-**Sistema de Monitoramento Inteligente da Frota Escolar** — tecnologia para uma operação mais segura, rastreável e eficiente.
-
-# 📜 Licença
-
-Software Proprietário.
-
----
-
 <div align="center">
 
 ### 🚍 Educação Inteligente • Gestão Eficiente • Transparência Pública
