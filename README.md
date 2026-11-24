@@ -367,10 +367,6 @@ A licença e os termos de uso deste projeto devem ser definidos pelo responsáve
 
 Software Proprietário.
 
-Desenvolvido por: https://zentix.eng.br
-
-Todos os direitos reservados © 2026.
-
 ---
 
 <div align="center">
